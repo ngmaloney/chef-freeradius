@@ -9,6 +9,12 @@ default['freeradius']['db_name'] = "radius"
 default['freeradius']['db_login'] = "radius"
 default['freeradius']['db_password'] = "radius"
 
+#Client Config
+default['freeradius']['local_secret'] = "testing1234"
+default['freeradius']['enable_remote_clients'] = true
+default['freeradius']['remote_secret'] = "remote1234"
+default['freeradius']['enable_sql'] = true
+
 # Used for source installation
 default[:freeradius][:url] = "http://ftp.cc.uoc.gr/mirrors/ftp.freeradius.org/"
 default[:freeradius][:version] = "2.1.10"

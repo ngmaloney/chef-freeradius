@@ -1,0 +1,32 @@
+# -*- text -*-
+##
+## clients.conf -- client configuration directives
+##
+##	$Id$
+
+client localhost {
+	ipaddr = 127.0.0.1
+	secret		= <%= node['freeradius']['local_secret'] %>
+	require_message_authenticator = no
+	nastype     = other
+}
+
+# This is NOT secure!
+# Use IPTABLES/Firewall to restrict remote access!
+<% if node['freeradius']['enable_remote_clients'] %>
+client remote {
+	ipaddr = 0.0.0.0
+	netmast = 0
+	secret = <%= node['freeradius']['remote_secret'] %>
+	require_message_authenticator = no
+	nastype     = other
+}
+<% end %>
+
+
+
+
+
+
+
+
