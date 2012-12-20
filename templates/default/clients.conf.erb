@@ -16,7 +16,7 @@ client localhost {
 <% if node['freeradius']['enable_remote_clients'] %>
 client remote {
 	ipaddr = 0.0.0.0
-	netmast = 0
+	netmask = 0
 	secret = <%= node['freeradius']['remote_secret'] %>
 	require_message_authenticator = no
 	nastype     = other
