@@ -24,6 +24,14 @@ template "#{node['freeradius']['dir']}/clients.conf" do
   notifies :restart, 'service[freeradius]', :immediately
 end
 
+template "#{node['freeradius']['dir']}/radiusd.conf" do
+  source "radiusd.conf.erb"
+  owner "freerad"
+  group "freerad"
+  mode 0600
+  notifies :restart, 'service[freeradius]', :immediately
+end
+
 service "freeradius" do
   supports :restart => true, :status => false, :reload => false
   action [:enable, :start]
