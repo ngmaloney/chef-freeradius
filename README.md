@@ -11,6 +11,29 @@ Requirements
 Usage
 ====
 
+To enable LDAP Support, please override the following attributes in a wrapper cookbook as such
+
+    node.override['freeradius']['enable_sql'] = false
+    node.override['freeradius']['enable_ldap'] = true
+    node.override['freeradius']['ldap_server'] = 'localhost'
+    node.override['freeradius']['ldap_port'] = '636'
+    node.override['freeradius']['ldap_basedn'] = 'dc=contoso,dc=local'
+    
+    node.override['freeradius']['clients'] = {
+      'localhost' => {
+        'ipaddr' => '127.0.0.1',
+        'netmask' => '0',
+        'secret' => 'password',
+        'nastype' => 'other'
+      },
+      'production' => {
+        'ipaddr' => '10.0.0.0',
+        'netmask' => '8',
+        'secret' => 'password',
+        'nastype' => 'other'
+      }
+    }
+
 
 License and Author
 ====

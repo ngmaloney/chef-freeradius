@@ -56,13 +56,13 @@ exec_prefix = /usr
 sysconfdir = /etc
 localstatedir = /var
 sbindir = ${exec_prefix}/sbin
-logdir = /var/log/freeradius
-raddbdir = /etc/freeradius
+logdir = <%= node['freeradius']['logdir']%>
+raddbdir = <%= node['freeradius']['dir'] %>
 radacctdir = ${logdir}/radacct
 
 #
 #  name of the running server.  See also the "-n" command-line option.
-name = freeradius
+name = <%= node['freeradius']['name'] %>
 
 #  Location of config and logfiles.
 confdir = ${raddbdir}
@@ -103,7 +103,7 @@ db_dir = ${raddbdir}
 #	make
 #	make install
 #
-libdir = /usr/lib/freeradius
+libdir = <%= node['freeradius']['libdir'] %>
 
 #  pidfile: Where to place the PID of the RADIUS server.
 #
@@ -164,8 +164,8 @@ pidfile = ${run_dir}/${name}.pid
 #  It will join all groups where "user" is a member.  This can allow
 #  for some finer-grained access controls.
 #
-user = freerad
-group = freerad
+user = <%= node['freeradius']['user'] %>
+group = <%= node['freeradius']['group'] %>
 
 #  max_request_time: The maximum time (in seconds) to handle a request.
 #

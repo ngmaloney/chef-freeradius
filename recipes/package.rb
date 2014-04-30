@@ -13,16 +13,39 @@ pkgs = value_for_platform(
   ssl-cert }
   },
   [ "ubuntu" ] => {
-    "default" => %w{ libfreeradius2 freeradius-common libperl5.10 libssl0.9.8 libc6 libltdl7 }
+    "default" => %w{ freeradius freeradius-common freeradius-utils libfreeradius2 }
   },
   [ "centos" ] => {
-    "default" => %w{ openssl-devel }
+    "default" => %w{ freeradius2 freeradius2-utils }
   },
   "default" => %w{ }
+)
+
+ldap_pkgs = value_for_platform(
+  [ "debian" ] => {
+    "default" => %w{ freeradius-ldap }
+  },
+  [ "ubuntu" ] => {
+    "default" => %w{ freeradius-ldap }
+  },
+  [ "centos" ] => {
+    "default" => %w{ freeradius2-ldap }
+  },
+  [ "default" ] => {
+    "default" => %w{ }
+  },
 )
 
 pkgs.each do |pkg|
   package pkg do
     action :install
+  end
+end
+
+if node['freeradius']['enable_ldap'] == true
+  ldap_pkgs.each do |pkg|
+    package pkg do
+      action :install
+    end
   end
 end

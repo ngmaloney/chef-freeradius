@@ -8,31 +8,51 @@
 #
 include_recipe "freeradius::#{node[:freeradius][:install_method]}"
 
+if node['freeradius']['enable_ldap'] == true
+  include_recipe 'freeradius::ldap'
+end
+
 template "#{node['freeradius']['dir']}/sql.conf" do
   source "sql.conf.erb"
-  owner "freerad"
-  group "freerad"
+  owner node['freeradius']['user']
+  group node['freeradius']['group']
   mode 0600
-  notifies :restart, 'service[freeradius]', :immediately
+  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 template "#{node['freeradius']['dir']}/clients.conf" do
   source "clients.conf.erb"
-  owner "freerad"
-  group "freerad"
+  owner node['freeradius']['user']
+  group node['freeradius']['group']
   mode 0600
-  notifies :restart, 'service[freeradius]', :immediately
+  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 template "#{node['freeradius']['dir']}/radiusd.conf" do
   source "radiusd.conf.erb"
-  owner "freerad"
-  group "freerad"
+  owner node['freeradius']['user']
+  group node['freeradius']['group']
   mode 0600
-  notifies :restart, 'service[freeradius]', :immediately
+  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
-service "freeradius" do
+template "#{node['freeradius']['dir']}/sites-available/default" do
+  source "default.erb"
+  owner node['freeradius']['user']
+  group node['freeradius']['group']
+  mode 0600
+  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
+end
+
+template "#{node['freeradius']['dir']}/sites-available/inner-tunnel" do
+  source "inner-tunnel.erb"
+  owner node['freeradius']['user']
+  group node['freeradius']['group']
+  mode 0600
+  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
+end
+
+service node['freeradius']['service'] do
   supports :restart => true, :status => false, :reload => false
   action [:enable, :start]
 end
