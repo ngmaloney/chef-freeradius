@@ -34,6 +34,11 @@ To enable LDAP Support, please override the following attributes in a wrapper co
       }
     }
 
+To install a specific package for your OS version, please override the following attributes in a wrapper cookbook as such
+
+    node.override['freeradius']['pkgs'] = %w{ freeradius2 freeradius2-utils }
+    node.override['freeradius']['ldap_pkgs'] = %w{ freeradius2-ldap }
+
 
 License and Author
 ====
