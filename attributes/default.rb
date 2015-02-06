@@ -1,6 +1,6 @@
-#OS Specific Attributes
+# OS Specific Attributes
 case platform_family
-when "rhel"
+when 'rhel'
   default['freeradius']['user'] = 'radiusd'
   default['freeradius']['group'] = 'radiusd'
   default['freeradius']['dir'] = '/etc/raddb'
@@ -8,7 +8,15 @@ when "rhel"
   default['freeradius']['logdir'] = '/var/log/radius'
   default['freeradius']['name'] = 'radiusd'
   default['freeradius']['libdir'] = '/usr/lib64/freeradius'
-when "debian"
+# Packages to install since centos 5 is freeradius 2 and centos 6 is  just freeradius
+  if node.platform_version.to_f < 6
+    default['freeradius']['pkgs'] = %w{ freeradius2 freeradius2-utils }
+    default['freeradius']['ldap_pkgs'] = %w{ freeradius2-ldap }
+  else
+    default['freeradius']['pkgs'] = %w{ freeradius freeradius-utils }
+    default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
+  end
+when 'debian'
   default['freeradius']['user'] = 'freerad'
   default['freeradius']['group'] = 'freerad'
   default['freeradius']['dir'] = '/etc/freeradius'
@@ -16,6 +24,14 @@ when "debian"
   default['freeradius']['logdir'] = '/var/log/freeradius'
   default['freeradius']['name'] = 'freeradius'
   default['freeradius']['libdir'] = '/usr/lib/freeradius'
+  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils freeradius-postgresql libdbi-perl libfreeradius2 libnet-daemon-perl libperl5.10 libplrpc-perl libpython2.6 ssl-cert }
+  default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
+when 'ubuntu'
+  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils libfreeradius2 }
+  default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
+else
+  default['freeradius']['pkgs'] = %w{ }
+  default['freeradius']['ldap_pkgs'] = %w{ }
 end
 
 default[:freeradius][:install_method] = "package"
@@ -28,13 +44,13 @@ default['freeradius']['db_name'] = "radius"
 default['freeradius']['db_login'] = "radius"
 default['freeradius']['db_password'] = "radius"
 
-#Client Config
+# Client Config
 default['freeradius']['local_secret'] = "testing1234"
 default['freeradius']['enable_remote_clients'] = true
 default['freeradius']['remote_secret'] = "remote1234"
 default['freeradius']['enable_sql'] = true
 
-#Client File Config
+# Client File Config
 default['freeradius']['clients'] = {
   'localhost' => {
     'ipaddr' => '127.0.0.1',
@@ -44,7 +60,7 @@ default['freeradius']['clients'] = {
   }
 }
 
-#LDAP Config
+# LDAP Config
 default['freeradius']['enable_ldap'] = false
 default['freeradius']['ldap_server'] = 'ldap.example.com'
 default['freeradius']['ldap_port'] = '636'
