@@ -1,3 +1,4 @@
+name             "freeradius"
 maintainer       "Nick Maloney"
 maintainer_email "ngmaloney@gmail.com"
 license          "All rights reserved"
