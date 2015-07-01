@@ -10,10 +10,10 @@ when 'rhel'
   default['freeradius']['libdir'] = '/usr/lib64/freeradius'
 # Packages to install since centos 5 is freeradius 2 and centos 6 is  just freeradius
   if node.platform_version.to_f < 6
-    default['freeradius']['pkgs'] = %w{ freeradius2 freeradius2-utils }
+    default['freeradius']['pkgs'] = %w{ freeradius2 freeradius2-utils freeradius2-postgresql }
     default['freeradius']['ldap_pkgs'] = %w{ freeradius2-ldap }
   else
-    default['freeradius']['pkgs'] = %w{ freeradius freeradius-utils }
+    default['freeradius']['pkgs'] = %w{ freeradius freeradius-utils freeradius-postgresql }
     default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
   end
 when 'debian'
@@ -24,10 +24,10 @@ when 'debian'
   default['freeradius']['logdir'] = '/var/log/freeradius'
   default['freeradius']['name'] = 'freeradius'
   default['freeradius']['libdir'] = '/usr/lib/freeradius'
-  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils freeradius-postgresql libdbi-perl libfreeradius2 libnet-daemon-perl libperl5.10 libplrpc-perl libpython2.6 ssl-cert }
+  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils libfreeradius2 freeradius-postgresql }
   default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
 when 'ubuntu'
-  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils libfreeradius2 }
+  default['freeradius']['pkgs'] = %w{ freeradius freeradius-common freeradius-utils libfreeradius2 freeradius-postgresql }
   default['freeradius']['ldap_pkgs'] = %w{ freeradius-ldap }
 else
   default['freeradius']['pkgs'] = %w{ }

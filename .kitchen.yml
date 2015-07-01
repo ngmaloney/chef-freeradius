@@ -1,0 +1,17 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos-5.11
+  - name: centos-6.6
+  - name: ubuntu-12.04
+  - name: ubuntu-14.10
+
+suites:
+  - name: default
+    run_list:
+      - recipe[freeradius::default]
