@@ -15,3 +15,8 @@ suites:
   - name: default
     run_list:
       - recipe[freeradius::default]
+    attributes:
+      freeradius:
+        clients:
+          10.0.0.0/24:
+            secret: secret123
