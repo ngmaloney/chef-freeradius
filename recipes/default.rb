@@ -33,6 +33,7 @@ template "#{node['freeradius']['dir']}/radiusd.conf" do
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
+  variables auth_log: node['freeradius']['log']['auth']
   notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
