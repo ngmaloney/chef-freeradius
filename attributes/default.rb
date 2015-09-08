@@ -34,7 +34,7 @@ else
   default['freeradius']['ldap_pkgs'] = %w{ }
 end
 
-default['freeradius']['install_method'] = "package"
+default['freeradius']['install_method'] = 'package'
 default['freeradius']['log']['auth'] = false
 
 # Db vars
