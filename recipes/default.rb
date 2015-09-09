@@ -8,22 +8,21 @@
 #
 include_recipe "freeradius::#{node[:freeradius][:install_method]}"
 
-sqlconf = "#{node['freeradius']['dir']}/sql.conf"
-ruby_block 'check_freeradius_version' do
-  radius_version = `radiusd -v | head -n1`.match(/FreeRADIUS Version ([\d\.]+)/)[1].to_f
-  sqlconf = "#{node['freeradius']['dir']['mods-available']}/sql" if radius_version >= 3
-end
-
 if node['freeradius']['enable_ldap'] == true
   include_recipe 'freeradius::ldap'
 end
 
-template sqlconf do
+template "#{node['freeradius']['dir']}/sql.conf" do
   source "sql.conf.erb"
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
   notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
+end
+
+link '/etc/raddb/mods-enabled/sql' do
+  to "#{node['freeradius']['dir']}/sql.conf"
+  link_type :symbolic
 end
 
 template "#{node['freeradius']['dir']}/clients.conf" do
