@@ -23,6 +23,7 @@ end
 link '/etc/raddb/mods-enabled/sql' do
   to "#{node['freeradius']['dir']}/sql.conf"
   link_type :symbolic
+  only_if { node.platform_version.to_f >= 7 }
 end
 
 template "#{node['freeradius']['dir']}/clients.conf" do
