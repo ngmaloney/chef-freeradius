@@ -61,5 +61,5 @@ end
 
 service node['freeradius']['service'] do
   supports :restart => true, :status => false, :reload => false
-  action [:enable, :start]
+  action [:enable]
 end
