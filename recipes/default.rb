@@ -18,7 +18,6 @@ if node['freeradius']['enable_ldap'] == true
   include_recipe 'freeradius::ldap'
 end
 
-
 template sqlconf do
   source "sql.conf.erb"
   owner node['freeradius']['user']
