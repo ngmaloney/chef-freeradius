@@ -56,8 +56,7 @@ default['freeradius']['clients'] = {
   'localhost' => {
     'ipaddr' => '127.0.0.1',
     'netmask' => '0',
-    'secret' => 'default_secret',
-    'nastype' => 'other'
+    'secret' => 'default_secret'
   }
 }
 
