@@ -318,15 +318,13 @@ log {
   #
   #  allowed values: {no, yes}
   #
+<% if @auth_log %>
+  auth = yes
+  auth_badpass = yes
+<% else %>
   auth = no
-
-  #  Log passwords with the authentication requests.
-  #  auth_badpass  - logs password if it's rejected
-  #  auth_goodpass - logs password if it's correct
-  #
-  #  allowed values: {no, yes}
-  #
   auth_badpass = no
+<% end %>
   auth_goodpass = no
 
   #  Log additional text at the end of the "Login OK" messages.
