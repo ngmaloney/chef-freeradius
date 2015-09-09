@@ -17,7 +17,6 @@ template "#{node['freeradius']['dir']}/sql.conf" do
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
-  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 link '/etc/raddb/mods-enabled/sql' do
@@ -31,7 +30,6 @@ template "#{node['freeradius']['dir']}/clients.conf" do
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
-  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 template "#{node['freeradius']['dir']}/radiusd.conf" do
@@ -40,7 +38,6 @@ template "#{node['freeradius']['dir']}/radiusd.conf" do
   group node['freeradius']['group']
   mode 0600
   variables auth_log: node['freeradius']['log']['auth']
-  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 template "#{node['freeradius']['dir']}/sites-available/default" do
@@ -48,7 +45,6 @@ template "#{node['freeradius']['dir']}/sites-available/default" do
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
-  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 template "#{node['freeradius']['dir']}/sites-available/inner-tunnel" do
@@ -56,10 +52,9 @@ template "#{node['freeradius']['dir']}/sites-available/inner-tunnel" do
   owner node['freeradius']['user']
   group node['freeradius']['group']
   mode 0600
-  notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
 service node['freeradius']['service'] do
   supports :restart => true, :status => false, :reload => false
-  action [:enable]
+  action :enable
 end
