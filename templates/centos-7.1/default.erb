@@ -59,6 +59,19 @@
 #
 #  Make *sure* that 'preprocess' comes before any realm if you
 #  need to setup hints for the remote radius server
+listen {
+  ipaddr = *
+  port = 0
+  type = acct
+}
+
+listen {
+  ipaddr = *
+  port = 0
+  type = auth
+}
+
+
 authorize {
   #
   #  The preprocess module takes care of sanitizing some bizarre
