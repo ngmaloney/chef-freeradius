@@ -6,7 +6,7 @@ template "#{node['freeradius']['dir']}/ldap" do
   notifies :restart, "service[#{node['freeradius']['service']}]", :immediately
 end
 
-modules_path = (node['platform_version'].to_f >= 7) ? "modules-enabled" : "modules"
+modules_path = (node['platform_version'].to_f >= 7) ? "mods-enabled" : "modules"
 link "/etc/raddb/#{modules_path}/ldap" do
   to "#{node['freeradius']['dir']}/ldap"
   link_type :symbolic
