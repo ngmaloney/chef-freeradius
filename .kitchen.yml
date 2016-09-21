@@ -1,15 +1,28 @@
 ---
 driver:
-  name: vagrant
+<% case ENV['KITCHEN_DRIVER']
+  when 'digitalocean' %>
+    name: digitalocean
+    region: fra1
+    ipv6: true
+    private_networking: true
+    size: 512
+  <% else %>
+    name: vagrant
+    customize:
+      memory: 512
+<% end %>
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: centos-5.11
-  - name: centos-6.6
-  - name: ubuntu-12.04
-  - name: ubuntu-14.10
+<% case ENV['KITCHEN_DRIVER']
+  when 'digitalocean' %>
+  - name: centos-7-2-x64
+<% else %>
+  - name: centos-7.2
+<% end %>
 
 suites:
   - name: default
